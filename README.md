@@ -12,11 +12,18 @@
 <p align="center">
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
   <img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" />
+  <img src="https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white" />
   <img src="https://img.shields.io/badge/-inquirer-red?style=for-the-badge&logo=inquirer&logoColor=white" />
   <img src="https://img.shields.io/badge/-json-blueviolet?style=for-the-badge&logo=json&logoColor=white" />
   <img src="https://img.shields.io/badge/-screencastify-coral?style=for-the-badge&logo=screencasify&logoColor=white" />
 </p>
+
+## Table of Contents
+- [Description](#description)
+- [Table of Contents](#table-of-contents)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Questions](#questions)
 
 ## Description
 A solution for managing a company's employees using node, inquirer, and MySQL
@@ -30,12 +37,6 @@ link to full length video:
 #### Screenshot of example:
 <!-- <img src="" width="400" height="200"> -->
 
-## Table of Contents
-- [Description](#description)
-- [Table of Contents](#table-of-contents)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Questions](#questions)
 
 ## Installation :gear:
 
@@ -45,8 +46,6 @@ link to full length video:
 To help managers to easily track their employees
 
 
-## Contributing
-[Meagan James](https://github.com/merikettapearl212)
 
 ## Questions
 :mailbox: Please contact me if you have any questions:
