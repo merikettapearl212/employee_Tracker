@@ -43,8 +43,7 @@ link to full length video:
 `node index.js`
 
 ## Usage :computer:
-To help managers to easily track their employees
-
+To help managers easily track their employees
 
 
 ## Questions
