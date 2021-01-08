@@ -72,5 +72,25 @@ function viewDepartments() {
             askAction();
         });
 }
+
+function viewRoles() {
+    db
+        .getRoles()
+        .then((results) => {
+            askAction();
+        })
+}
+
+function viewEmployees() {
+
+    db
+      .getEmployees()
+      .then((results) => {
+        console.table(results);
+        askAction();
+      });
+}
+
+
 askAction();
 
