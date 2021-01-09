@@ -9,12 +9,11 @@ CREATE TABLE departments (
 );
 
 CREATE TABLE roles (
-    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    id INT unsigned AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR (30) UNIQUE NOT NULL,
     salary DECIMAL NOT NULL,
     department_id INT NOT NULL,
-    INDEX dep_ind (department_id),
-    CONSTRAINT fk_department FOREIGN KEY  (department_id) REFERENCES  department(id) ON DELETE CASCADE 
+    CONSTRAINT fk_department FOREIGN KEY(id) REFERENCES departments(id) on delete CASCADE
 );
 
 CREATE TABLE employees (

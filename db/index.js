@@ -9,11 +9,11 @@ module.exports = {
     },
     getEmployees() {
         return connection.query("SELECT * FROM employees");
-    }
-    // createDepartments(data) {
-    //     return connection.query("INSERT INTO departments SET ?", data);
+    },
+    createDepartments(data) {
+        return connection.query("INSERT INTO departments SET ?", data);
 
-    // },
+    }
     // createRoles(data) {
     //     return connection.query("INSERT INTO roles SET ?", data);
 
@@ -33,5 +33,5 @@ module.exports = {
     //             }
     //         ]);
 
-    // }
+    
 }

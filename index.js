@@ -38,7 +38,11 @@ function askForAction() {
                 case "VIEW_EMPLOYEES":
                     viewEmployees();
                     return;
-                    
+                
+                case "CREATE_DEPARTMENT":
+                    createDepartments();
+                    return;
+
                 case "CREATE_ROLE":
                     createRole();
                     return;
@@ -54,7 +58,8 @@ function viewDepartments() {
     db
         .getDepartments()
         .then((results) => {
-            console.table(results);
+            let departmentsTable = conTable.getTable(results);
+            console.table(departmentsTable);
         });
 }
 
@@ -62,7 +67,9 @@ function viewRoles() {
     db
         .getRoles()
         .then((results) => {
-            console.table(results);
+            let rolesTable = conTable.getTable(results);
+            console.table(rolesTable);
+            
         });
 }
 
@@ -75,39 +82,20 @@ function viewEmployees() {
       });
 }
 
-// function createRole(){
-//     db.getDepartments()
-//     .then((departments)=>{
-
-//         inquirer
-//             .prompt([
-//                 {
-//                     message:"what department is this role for?",
-//                     type:"list",
-//                     name:"department_id",
-//                     choices:departments.map((department)=>({
-//                         value:department.department_id,
-//                         name:department.name
-//                     }))
-//                 },
-//                 {
-//                     message:"what is the title of the new role",
-//                     type:"input",
-//                     name:"title",
-//                 },
-//                 {
-//                     message:"what is the salary of the new role",
-//                     type:"input",
-//                     name:"salary",
-//                 }
-//             ])
-//             .then((res)=>{
-//                 console.table(res);
-//                 askForAction();
-//             });
-
-//         })
-//     };
+function createDepartments() {
+    inquirer.prompt([
+        {
+            message: "What department would you like to create?",
+            type: "input",
+            name: "name",
+        }
+    ]).then(newDepartment => {
+        db.createDepartments(newDepartment).then((res) => {
+            console.log("New Department Added!")
+            askForAction();
+        })
+    })
+}
 
 // function addEmployee(){
 //     db.getEmployees()
@@ -138,3 +126,6 @@ function viewEmployees() {
 
 askForAction();
 
+db.getDepartments().then((results) => {
+    console.log(results);
+});
