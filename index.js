@@ -63,7 +63,7 @@ function viewRoles() {
         .getRoles()
         .then((results) => {
             console.table(results);
-        })
+        });
 }
 
 function viewEmployees() {

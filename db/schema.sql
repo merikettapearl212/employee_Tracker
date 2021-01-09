@@ -3,7 +3,7 @@ CREATE database employee_trackerDB;
 
 USE employee_trackerDB;
 
-CREATE TABLE employee_trackerDB (
+CREATE TABLE departments (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) UNIQUE NOT NULL
 );
@@ -27,3 +27,4 @@ CREATE TABLE employees (
     INDEX nan_ind (manager_id),
     CONSTRAINT fk_manager_id FOREIGN KEY(manager_id) REFERENCES employees(id) ON DELETE SET NULL
 );
+
