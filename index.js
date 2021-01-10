@@ -1,89 +1,95 @@
+const mysql = require("mysql");
 const inquirer = require("inquirer");
+const logo = require("asciiart-logo");
+const cTable = require("console.table");
+
 const db = require("./db");
 const connection = require("./db/connection");
-const conTable = require("console.table");
 
-const logo = require('asciiart-logo');
-const config = require('./package.json');
-console.log(logo(config).render());
 
 function askForAction() {
-    inquirer
-        .prompt({
-            message: "What would you like to do?",
-            name: "action",
-            type: "list",
-            choices: [
-                "VIEW_DEPARTMENTS",
-                "VIEW_ROLES",
-                "VIEW_EMPLOYEES",
-                "CREATE_DEPARTMENT",
-                "CREATE_ROLE",
-                "CREATE_EMPLOYEE",
-                "UPDATE_EMPLOYEE_ROLE",
-                "QUIT"
-                ]
-        })
-        .then((res) => {
-            switch (res.action){
 
-                case "VIEW_DEPARTMENTS":
-                    viewDepartments();
-                    return;
+    inquirer.prompt({
+        message: "Choose something to do",
+        name: "action",
+        type: "list",
+        choices: [
+            "VIEW_DEPARTMENTS",
+            "VIEW_ROLES",
+            "VIEW_EMPLOYEES",
+            "CREATE_DEPARTMENT",
+            "CREATE_ROLE",
+            "CREATE_EMPLOYEE",
+            "UPDATE_EMPLOYEE_ROLE",
+            "QUIT"
+        ]
+    }).then((res) => {
+        switch (res.action) {
+            case "VIEW_DEPARTMENTS":
+                viewDepartments();
+                return;
 
-                case "VIEW_ROLES":
-                    viewRoles();
-                    return;
-                    
-                case "VIEW_EMPLOYEES":
-                    viewEmployees();
-                    return;
-                
-                case "CREATE_DEPARTMENT":
-                    createDepartments();
-                    return;
+            case "VIEW_ROLES":
+                viewRoles();
+                return;
 
-                case "CREATE_ROLE":
-                    createRoles();
-                    return;
+            case "VIEW_EMPLOYEES":
+                viewEmployees();
+                return;
 
-                case "CREATE_EMPLOYEE":
-                    createEmployees();
-                    return;
+            case "CREATE_DEPARTMENT":
+                createDepartments();
+                return;
 
-                default:
-                    connection.end();
-                }
+            case "CREATE_ROLE":
+                createRoles();
+                return;
 
-        })
+            case "CREATE_EMPLOYEE":
+                createEmployees();
+                return;
+
+            case "UPDATE_EMPLOYEE_ROLE":
+                updateEmployeeRoles();
+                return;
+
+            default:
+                connection.end();
+        }
+    })
 }
 
 function viewDepartments() {
-    db
-        .getDepartments()
+
+    db.getDepartments()
         .then((results) => {
-            let departmentsTable = conTable.getTable(results);
+            let departmentsTable = cTable.getTable(results);
             console.table(departmentsTable);
+            askForAction();
         });
+
 }
 
 function viewRoles() {
-    db
-        .getRoles()
+
+    db.getRoles()
         .then((results) => {
-            let rolesTable = conTable.getTable(results);
+            let rolesTable = cTable.getTable(results);
             console.table(rolesTable);
-            
+            askForAction();
         });
+
 }
 
 function viewEmployees() {
 
-    db
-      .getEmployees()
-      .then((results) => {
-        console.table(results);
-      });
+    db.getEmployees()
+        .then((results) => {
+            let employeesTable = cTable.getTable(results);
+            console.table(employeesTable);
+            askForAction();
+        });
+
 }
 
 function createDepartments() {
@@ -94,17 +100,15 @@ function createDepartments() {
             name: "name",
         }
     ]).then(newDepartment => {
-        db.createDepartments(newDepartment).then((res) => {
+        db.insertDepartments(newDepartment).then((res) => {
             console.log("New Department Added!")
-            
+            askForAction();
         })
     })
 }
 
 function createRoles() {
-    db
-    .getDepartments()
-    .then((departments) => {
+    db.getDepartments().then((departments) => {
 
         console.log(departments);
 
@@ -113,8 +117,7 @@ function createRoles() {
             name: department.name
         }))
 
-        inquirer
-        .prompt([
+        inquirer.prompt([
             {
                 message: "What department is this role for?",
                 type: "list",
@@ -131,22 +134,117 @@ function createRoles() {
                 type: "input",
                 name: "salary",
             }
-        ]).then(function (results) {
-            db
-                .createRoles(results)
-
-        });
+        ]).then(newRole => {
+            db.insertRoles(newRole).then((res) => {
+                console.log("New Role Added!")
+                askForAction();
+            })
+        })
     })
 }
 
+function createEmployees() {
+    db.getRoles()
+        .then((roles) => {
+            console.log(roles);
 
-// function createEmployees() {
+            const roleList = roles.map((role) => ({
+                value: role.id,
+                name: role.title
+            }));
+            db.getEmployees()
+                .then((employees) => {
+                    console.log(employees);
 
-// }
+                    const employeeList = employees.map((employee) => ({
+                        value: employee.id,
+                        name: `${employee.first_name} ${employee.last_name}`
+                    }))
+                    inquirer.prompt([
+                        {
+                            message: "What is the employee's first name?",
+                            type: "input",
+                            name: "first_name",
+                        },
+                        {
+                            message: "What is the employee's last name?",
+                            type: "input",
+                            name: "last_name",
+                        },
+                        {
+                            message: "What is the role for this employee?",
+                            type: "list",
+                            name: "role_id",
+                            choices: roleList
+                        },
+                        {
+                            message: "Who will be this employees manager?",
+                            type: "list",
+                            name: "manager_id",
+                            choices: employeeList
+                        }
+                    ]).then(newEmployee => {
+                        db.insertEmployee(newEmployee).then((res) => {
+                            console.log("New Employee Added!")
+                            askForAction();
+                        })
+                    })
+                })
+        }
+        )
+}
+
+function updateEmployeeRoles() {
+    db.getEmployees()
+        .then((employees) => {
+            console.log(employees);
+
+            const employeeList = employees.map((employee) => ({
+                value: employee.id,
+                name: `${employee.first_name} ${employee.last_name}`
+            }));
+            db.getRoles()
+                .then((roles) => {
+                    console.log(roles);
+
+                    const roleList = roles.map((role) => ({
+                        value: role.id,
+                        name: role.title
+                    })
+                    );
+                    inquirer.prompt([
+                        {
+                            message: "Which employee would you like to change?",
+                            type: "list",
+                            name: "employeeId",
+                            choices: employeeList
+                        },
+                        {
+                            message: "What is this employees new role?",
+                            type: "list",
+                            name: "roleId",
+                            choices: roleList
+                        }
+                    ]).then(updatedEmployee => {
+                        db.updateEmployee(updatedEmployee).then((res) => {
+                            console.log("Employee Info Updated!")
+                            askForAction();
+                        })
+                    })
+
+                });
+
+        });
+
+}
+
+
 
 
 askForAction();
 
-// db.getDepartments().then((results) => {
-//     console.log(results);
-// });
+
+
+db.getDepartments().then((results) => {
+    console.log(results);
+});
