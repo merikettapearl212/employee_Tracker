@@ -13,15 +13,15 @@ module.exports = {
     createDepartments(data) {
         return connection.query("INSERT INTO departments SET ?", data);
 
+    },
+    createRoles(data) {
+        return connection.query("INSERT INTO roles SET ?", data);
+
+    },
+    createEmployees(data) {
+        return connection.query("INSERT INTO employees SET ?", data);
+
     }
-    // createRoles(data) {
-    //     return connection.query("INSERT INTO roles SET ?", data);
-
-    // },
-    // createEmployee(data) {
-    //     return connection.query("INSERT INTO employees SET ?", data);
-
-    // },
     // updateEmployee(data) {
     //     return connection.query("UPDATE employees SET ? WHERE ?",
     //         [

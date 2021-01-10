@@ -23,7 +23,6 @@ CREATE TABLE employees (
     role_id INT unsigned NOT NULL,
     CONSTRAINT fk_role_id FOREIGN KEY(role_id) REFERENCES roles(id) on delete CASCADE,
     manager_id INT unsigned,
-    INDEX nan_ind (manager_id),
     CONSTRAINT fk_manager_id FOREIGN KEY(manager_id) REFERENCES employees(id) ON DELETE SET NULL
 );
 

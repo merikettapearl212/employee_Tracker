@@ -44,7 +44,11 @@ function askForAction() {
                     return;
 
                 case "CREATE_ROLE":
-                    createRole();
+                    createRoles();
+                    return;
+
+                case "CREATE_EMPLOYEE":
+                    createEmployees();
                     return;
 
                 default:
@@ -92,40 +96,57 @@ function createDepartments() {
     ]).then(newDepartment => {
         db.createDepartments(newDepartment).then((res) => {
             console.log("New Department Added!")
-            askForAction();
+            
         })
     })
 }
 
-// function addEmployee(){
-//     db.getEmployees()
-//     .then((employees)=>{
-//         inquirer
-//             .prompt([
-//                 {
-//                     message:"what is the employee first name?",
-//                     type:"input",
-//                     name:"first_name",
-//                 },
-//                 {
-//                     message:"what is the employee last name?",
-//                     type:"input",
-//                     name:"last_name",
+function createRoles() {
+    db
+    .getDepartments()
+    .then((departments) => {
 
-//                 },
-//                 {
-//                     message:"what is the role of the employee?",
-//                     type:"list",
-//                     name:"role_id",
-//                     choices:""
-//                 }
-//             ])
-//     })
+        console.log(departments);
+
+        const departmentChoices = departments.map((department) => ({
+            value: department.id,
+            name: department.name
+        }))
+
+        inquirer
+        .prompt([
+            {
+                message: "What department is this role for?",
+                type: "list",
+                name: "department_id",
+                choices: departmentChoices
+            },
+            {
+                message: "What is the title of this role?",
+                type: "input",
+                name: "title",
+            },
+            {
+                message: "What is the salary for this role?",
+                type: "input",
+                name: "salary",
+            }
+        ]).then(function (results) {
+            db
+                .createRoles(results)
+
+        });
+    })
+}
+
+
+// function createEmployees() {
+
 // }
 
 
 askForAction();
 
-db.getDepartments().then((results) => {
-    console.log(results);
-});
+// db.getDepartments().then((results) => {
+//     console.log(results);
+// });
