@@ -12,10 +12,10 @@ const connection = mysql.createConnection({
     database: "employee_tracker_db"
   });
   
-  connection.connect((err) => {
-    if(err) throw err;
-    console.log("connected as id "+ connection.threadId);
-  });
+  connection.connect(function (err) {
+    if (err) throw err;
+    console.log("connected as id " + connection.threadId);
+});
 
   connection.query = util.promisify(connection.query);
 

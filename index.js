@@ -1,11 +1,13 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-const logo = require("asciiart-logo");
 const cTable = require("console.table");
 
 const db = require("./db");
 const connection = require("./db/connection");
 
+const logo = require('asciiart-logo');
+const config = require('./package.json');
+console.log(logo(config).render());
 
 function askForAction() {
 
@@ -246,5 +248,5 @@ askForAction();
 
 
 db.getDepartments().then((results) => {
-    console.log(results);
+    // console.log(results);
 });
