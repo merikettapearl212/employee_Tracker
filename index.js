@@ -52,7 +52,7 @@ function askForAction() {
                 return;
 
             case "UPDATE_EMPLOYEE_ROLE":
-                updateEmployeeRoles();
+                updateEmployeeRole();
                 return;
 
             default:
@@ -199,10 +199,48 @@ function createEmployees() {
                         })
                     })
                 })
-        }
-        )
+        })
 }
 
+function updateEmployeeRole() {
+    db.getEmployees()
+        .then((employees) => {
+            // console.log(employees);
+            const employeeList = employees.map((employee) => ({
+                value: employee.id,
+                name: `${employee.first_name} ${employee.last_name}`
+            }));
+            db.getRoles()
+                .then((roles) => {
+            // console.log(roles);
+                const roleList = roles.map((role) => ({
+                    value: role.id,
+                    name: role.title
+                }));
+            inquirer.prompt([
+                {
+                    message: "What employee role do you want to change?",
+                    name: "id",
+                    type: "list",
+                    choices: employeeList
+                },
+                {
+                    message: "What is the employee's new role?",
+                    name: "role_id",
+                    type: "list",
+                    choices: roleList
+                } 
+            ]).then(updatedEmployee => {
+                db.updateEmployee(updatedEmployee).then((res) => {
+                    console.log("Employee role updated!")
+                        askForAction();
+
+                })
+            })
+        });
+       
+    });
+}
 
 
 
