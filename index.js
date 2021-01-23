@@ -151,11 +151,11 @@ function createRoles() {
 }
 
 
-// Doesnt work! >>>>>>>>>>>>>>>>>
+
 function createEmployees() {
     db.getRoles()
         .then((roles) => {
-            console.log(roles);
+            // console.log(roles);
 
             const roleList = roles.map((role) => ({
                 value: role.id,
@@ -163,7 +163,7 @@ function createEmployees() {
             }));
             db.getEmployees()
                 .then((employees) => {
-                    console.log(employees);
+                    // console.log(employees);
 
                     const employeeList = employees.map((employee) => ({
                         value: employee.id,
@@ -193,7 +193,7 @@ function createEmployees() {
                             choices: employeeList
                         }
                     ]).then(newEmployee => {
-                        db.insertEmployee(newEmployee).then((res) => {
+                        db.createEmployees(newEmployee).then((res) => {
                             console.log("New Employee Added!")
                             askForAction();
                         })
