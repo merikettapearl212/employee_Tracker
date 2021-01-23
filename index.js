@@ -94,6 +94,7 @@ function viewEmployees() {
 
 }
 
+
 function createDepartments() {
     inquirer.prompt([
         {
@@ -102,49 +103,55 @@ function createDepartments() {
             name: "name",
         }
     ]).then(newDepartment => {
-        db.insertDepartments(newDepartment).then((res) => {
+        db.createDepartments(newDepartment).then((res) => {
             console.log("New Department Added!")
             askForAction();
         })
     })
 }
 
+
 function createRoles() {
-    db.getDepartments().then((departments) => {
+    db
+        .getDepartments()
+        .then((departments) => {
 
-        console.log(departments);
-
-        const departmentChoices = departments.map((department) => ({
-            value: department.id,
-            name: department.name
-        }))
-
-        inquirer.prompt([
-            {
-                message: "What department is this role for?",
-                type: "list",
-                name: "department_id",
-                choices: departmentChoices
-            },
-            {
-                message: "What is the title of this role?",
-                type: "input",
-                name: "title",
-            },
-            {
-                message: "What is the salary for this role?",
-                type: "input",
-                name: "salary",
-            }
-        ]).then(newRole => {
-            db.insertRoles(newRole).then((res) => {
-                console.log("New Role Added!")
-                askForAction();
+            const departmentChoices = departments.map((department) => ({
+                value: department.id,
+                name: department.name
+            }))
+        
+            inquirer
+                .prompt([
+                    {
+                        message: "What department is this role for?",
+                        type: "list",
+                        name: "department_id",
+                        choices: departmentChoices
+                    },
+                    {
+                        message: "What is the title of this role?",
+                        type: "input",
+                        name: "title",
+                    },
+                    {
+                        message: "What is the salary for this role?",
+                        type: "input",
+                        name: "salary",
+                    }
+                ]).then(newRole => {
+                    db.createRoles(newRole).then((res) => {
+                        console.log("New Role Added!")
+                        askForAction();
+                    })
+                    
+                    
+                })
             })
-        })
-    })
 }
 
+
+// Doesnt work! >>>>>>>>>>>>>>>>>
 function createEmployees() {
     db.getRoles()
         .then((roles) => {
@@ -196,49 +203,7 @@ function createEmployees() {
         )
 }
 
-function updateEmployeeRoles() {
-    db.getEmployees()
-        .then((employees) => {
-            console.log(employees);
 
-            const employeeList = employees.map((employee) => ({
-                value: employee.id,
-                name: `${employee.first_name} ${employee.last_name}`
-            }));
-            db.getRoles()
-                .then((roles) => {
-                    console.log(roles);
-
-                    const roleList = roles.map((role) => ({
-                        value: role.id,
-                        name: role.title
-                    })
-                    );
-                    inquirer.prompt([
-                        {
-                            message: "Which employee would you like to change?",
-                            type: "list",
-                            name: "employeeId",
-                            choices: employeeList
-                        },
-                        {
-                            message: "What is this employees new role?",
-                            type: "list",
-                            name: "roleId",
-                            choices: roleList
-                        }
-                    ]).then(updatedEmployee => {
-                        db.updateEmployee(updatedEmployee).then((res) => {
-                            console.log("Employee Info Updated!")
-                            askForAction();
-                        })
-                    })
-
-                });
-
-        });
-
-}
 
 
 
@@ -247,6 +212,3 @@ askForAction();
 
 
 
-db.getDepartments().then((results) => {
-    // console.log(results);
-});
