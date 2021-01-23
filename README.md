@@ -35,12 +35,12 @@ link to full length video:
 <!-- [here](https) -->
 
 #### Screenshot of example:
-<!-- <img src="" width="400" height="200"> -->
+<img src="assets/images/Screen Shot 2021-01-23 at 10.25.24 AM.png" width="400" height="200">
 
 
 ## Installation :gear:
 
-`node index.js`
+Clone the repo and run `npm install`
 
 ## Usage :computer:
 To help managers easily track their employees
