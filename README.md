@@ -35,7 +35,7 @@ link to full length video:
 [here](https://drive.google.com/file/d/1vtT420tNWfitv-IE5WtAr45ZVNNo-5uj/view)
 
 #### Screenshot of example:
-<img src="assets/images/Screen Shot 2021-01-23 at 10.25.24 AM.png" width="400" height="200">
+<img src="assets/images/Screen Shot 2021-01-23 at 10.25.24 AM.png" width="400" height="250">
 
 
 ## Installation :gear:
