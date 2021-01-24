@@ -28,11 +28,11 @@
 ## Description
 A solution for managing a company's employees using node, inquirer, and MySQL
 
-#### Below shows the functionality of the application with a gif :movie_camera:
+#### Below shows the functionality of the application :movie_camera:
 <!-- ![Team Profile Generator](.gif) -->
 
 link to full length video: 
-<!-- [here](https) -->
+[here](https://drive.google.com/file/d/1vtT420tNWfitv-IE5WtAr45ZVNNo-5uj/view)
 
 #### Screenshot of example:
 <img src="assets/images/Screen Shot 2021-01-23 at 10.25.24 AM.png" width="400" height="200">

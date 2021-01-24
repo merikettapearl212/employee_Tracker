@@ -9,7 +9,7 @@ VALUES
   ('Legal');
   
 INSERT INTO roles
-(title, salary, department_id)
+(role_title, salary, department_id)
 VALUES
   ('Sales Lead', 100000, 1),
   ('Salesperson', 80000, 1),
@@ -24,7 +24,7 @@ INSERT INTO employees
 (first_name, last_name, role_id, manager_id)
 VALUES
 ('Terry', 'Bradford', 1, NULL),
-('Jim', 'Oconnell', 2, 1),
+('Natasha', 'Romanoff', 2, 1),
 ('Dwight', 'Klein', 2, 1),
 ('Scarlet', 'Hughes', 3, NULL),
 ('Alice', 'Mcclure', 4, NULL),
@@ -32,3 +32,5 @@ VALUES
 ('Oscar', 'Cortez', 5, 5),
 ('Bryan', 'Wayne', 6, NULL),
 ('Owen', 'Bratton', 7, NULL);
+
+-- //left join "ee"
